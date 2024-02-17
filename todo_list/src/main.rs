@@ -1,3 +1,4 @@
+use prettytable::{row, Table};
 use std::io;
 use std::io::Write;
 
@@ -52,17 +53,21 @@ fn handle_command_input() -> Command {
 
 fn view_tasks(task_list: &Vec<String>) {
     println!("Your Tasks");
-    println!("===================================");
-    println!("| No. | Task Name                 |");
-    println!("===================================");
+    let mut tasks_table = Table::new();
+    tasks_table.set_titles(row!["No.", "Task Name"]);
+    // println!("===================================");
+    // println!("| No. | Task Name                 |");
+    // println!("===================================");
     if task_list.is_empty() {
-        println!("|     | {0: <26}|", "");
+        tasks_table.add_row(row!["", ""]);
     } else {
         for (index, task) in task_list.iter().enumerate() {
-            println!("|  {0: <2} | {1: <26}|", index + 1, task);
+            // println!("|  {0: <2} | {1: <26}|", index + 1, task);
+            tasks_table.add_row(row![index + 1, task]);
         }
     }
-    println!("===================================");
+    tasks_table.printstd();
+    // println!("===================================");
 }
 
 fn add_task(task_list: &mut Vec<String>) {
