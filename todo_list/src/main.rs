@@ -28,7 +28,6 @@ fn handle_command_input() -> Command {
     println!("4. Exit");
     print!(">> ");
     let _ = io::stdout().flush();
-
     let mut command_input = String::new();
     io::stdin()
         .read_line(&mut command_input)
@@ -42,7 +41,6 @@ fn handle_command_input() -> Command {
             Command::Unknown
         }
     };
-
     command_input
 }
 
@@ -76,13 +74,12 @@ fn add_task(task_list: &mut Vec<String>) {
             println!("Can't be empty!");
         }
     }
-    let new_task_name = new_task_name.trim().to_string();
-    task_list.push(new_task_name);
+    task_list.push(new_task_name.trim().to_string());
     println!("Update: Successfully added new task!");
 }
 
 fn remove_task(task_list: &mut Vec<String>) {
-    if task_list.len() == 0 {
+    if task_list.is_empty() {
         println!("You don't have any tasks at the moment");
         return;
     }
@@ -98,7 +95,7 @@ fn remove_task(task_list: &mut Vec<String>) {
 
     match remove_task_index.trim().parse::<usize>() {
         Ok(ind) => {
-            if ind > task_list.len() {
+            if ind > task_list.len() || ind < 1 {
                 println!("Taks not found!");
                 return;
             }
@@ -142,5 +139,5 @@ fn main() {
             .read_line(&mut buffer)
             .expect("Failed to read line!");
         println!("\n\n\n\n");
-    }
+    };
 }
