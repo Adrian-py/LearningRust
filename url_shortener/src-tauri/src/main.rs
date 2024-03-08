@@ -16,14 +16,14 @@ struct LinkResponse {
     data: LinkData,
 }
 
-async fn send_request(url: &str) -> Result<LinkResponse, reqwest::Error> {
+async fn send_request(url: &str) -> Result<LinkResponse, Box<dyn std::error::Error>> {
     let client = reqwest::Client::new();
 
     // constructing request body
     let mut request_body: HashMap<&str, &str> = HashMap::new();
     request_body.insert("url", url);
 
-    let shortened_link: LinkResponse = client
+    let shortened_link = client
         .post("https://api.tinyurl.com/create")
         .query(&[(
             "api_token",
@@ -32,8 +32,12 @@ async fn send_request(url: &str) -> Result<LinkResponse, reqwest::Error> {
         .json(&request_body)
         .send()
         .await?
-        .json()
+        .json::<LinkResponse>()
         .await?;
+
+    if shortened_link.code != 0 {
+        return Err("Failed to shorten link!".into());
+    }
 
     Ok(shortened_link)
 }
@@ -42,10 +46,7 @@ async fn send_request(url: &str) -> Result<LinkResponse, reqwest::Error> {
 fn shorten_url(url: &str) -> String {
     let link = send_request(&url);
     match block_on(link) {
-        Ok(shortened_link) => match shortened_link.code {
-            0 => shortened_link.data.tiny_url,
-            _ => format!("Failed to shorten link!"),
-        },
+        Ok(shortened_link) => shortened_link.data.tiny_url,
         Err(err) => format!("{}", err),
     }
 }
