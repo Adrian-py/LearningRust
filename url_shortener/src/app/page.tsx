@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-950">
       <h1 className="text-5xl font-bold">
-      💻 URL Shortener 💻
+        URL Shortener 
       </h1>
       <form className="my-[10vw] flex flex-col items-center justify-start gap-[1rem]" onSubmit={shortenUrl}>
         <label htmlFor="url" className="opacity-[0.5]">Enter a URL to shorten:</label>
@@ -48,7 +48,7 @@ export default function Home() {
         </>
       }
 
-      <footer className="fixed bottom-[5vh]">
+      <footer className="fixed bottom-[5vh] opacity-[75%]">
         <p className="text-xs">
           Created By <b>Adrian H.</b>
         </p>
