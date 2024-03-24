@@ -1,49 +1,12 @@
-#[derive(Clone, Debug, PartialEq)]
-pub struct LinkNode<T> {
-    pub val: T,
-    pub next: Option<Box<LinkNode<T>>>,
-}
+mod linked_list;
 
-impl<T: Clone> LinkNode<T> {
-    fn new(val: T) -> Self {
-        Self {
-            val: val,
-            next: None,
-        }
-    }
-
-    pub fn add_to_start(&mut self, val: T) {
-        let new_node = Self {
-            val: val,
-            next: Some(Box::new(self.clone())),
-        };
-
-        *self = new_node; 
-    }
-
-    pub fn add_to_end(&mut self, val: T) {
-        match &mut self.next {
-            Some(next_node) => {
-                next_node.add_to_end(val);
-            },
-            None => {
-                let new_node = Some(Box::new(Self {
-                    val: val,
-                    next: None,
-                }));
-
-                self.next = new_node;
-            },
-        }
-    }
-}
+use linked_list::LinkNode;
 
 fn main() {
-    let mut head: LinkNode<u32> = LinkNode::new(1);
-    LinkNode::add_to_start(&mut head, 2); 
-    LinkNode::add_to_start(&mut head, 3); 
-    LinkNode::add_to_start(&mut head, 4); 
-    LinkNode::add_to_end(&mut head, 5);
-    LinkNode::add_to_end(&mut head, 6);
+    let mut head = LinkNode::<u32>::new(1);
+    head.add_to_start(2); 
+    head.add_to_start(3); 
+    head.add_to_end(4); 
+    head.add_to_end(5); 
     println!("{:?}", head);
 }
