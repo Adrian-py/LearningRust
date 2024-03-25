@@ -8,7 +8,9 @@ fn main() {
     head.add_to_start(3); 
     head.add_to_end(4); 
     head.add_to_end(5);
+    head.print_list();
     head.remove_from_start();
+    head.print_list();
     head.remove_from_end();
-    println!("{:?}", head);
+    head.print_list();
 }

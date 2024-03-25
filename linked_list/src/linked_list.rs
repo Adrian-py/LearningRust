@@ -1,10 +1,12 @@
+use std::fmt::Debug;
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct LinkNode<T> {
     pub val: T,
     pub next: Option<Box<LinkNode<T>>>,
 }
 
-impl<T: Clone> LinkNode<T> {
+impl<T> LinkNode<T> {
     pub fn new(val: T) -> Self {
         Self {
             val: val,
@@ -12,6 +14,28 @@ impl<T: Clone> LinkNode<T> {
         }
     }
 
+}
+
+impl<T: Debug> LinkNode<T> {
+    pub fn print_list(&mut self){
+        let mut current_node = self;
+
+        loop {
+            match &mut current_node.next {
+                Some(next_node) => {
+                    print!("{:?} -> ", current_node.val);
+                    current_node = next_node;
+                },
+                None => {
+                    println!("{:?}", current_node.val);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+impl<T: Clone> LinkNode<T> {
     pub fn add_to_start(&mut self, val: T) {
         let new_node = Self {
             val: val,
