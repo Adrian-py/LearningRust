@@ -37,7 +37,21 @@ impl<T: Clone> LinkNode<T> {
         }
     }
 
-    // TODO: Add remove node from start and end of linked list
-    // pub fn remove_from_start() {}
-    // pub fn remove_from_end() {}
+    pub fn remove_from_start(&mut self) {
+        *self = *self.next.take().unwrap();
+    }
+
+    pub fn remove_from_end(&mut self) -> bool {
+        match &mut self.next {
+            Some(next_node) => {
+                if next_node.remove_from_end() == true {
+                    self.next = None;
+                }
+                false
+            },
+            None => {
+                true
+            },
+        }
+    }
 }
