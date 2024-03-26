@@ -4,6 +4,7 @@ This mini project is a linked list implementation in Rust. The main purpose of t
 
 ## TODO
 
-1. Use Option<LinkNode> for the list head
+1. Use Option<LinkNode> for the list head ✅
 2. Implement Drop trait for when LinkNode is dropped
 3. Implement Iterator for LinkNode
+4. Find a better way to remove and add to the end of the list
