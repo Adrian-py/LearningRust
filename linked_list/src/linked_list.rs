@@ -73,6 +73,14 @@ impl<T: Debug> LinkedList<T> {
     }
 
     pub fn pop_end(&mut self) -> Option<T> {
+        // check if there is only one node in the list
+        if let Some(head) = &self.head {
+            if head.next.is_none() {
+                return Some(self.head.take().unwrap().val);
+            }
+        }
+
+        // retrieve second to last node and change .next
         let mut current_node = &mut self.head;
 
         while let Some(node) = current_node {
