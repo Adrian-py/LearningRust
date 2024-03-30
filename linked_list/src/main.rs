@@ -3,21 +3,14 @@ mod linked_list;
 use linked_list::LinkedList;
 
 fn main() {
-    let mut linked_list = LinkedList::<u32>::new(1);
+    let mut linked_list = LinkedList::<i32>::new();
 
-    /*
-        Should end up with:
-        3 -> 2 -> 1 -> 5 -> 6
-     */
-    linked_list.add_to_start(2);
-    linked_list.add_to_start(3);
-    linked_list.add_to_start(4);
-    linked_list.add_to_end(5);
-    linked_list.add_to_end(6);
-    linked_list.add_to_end(7);
+    linked_list.push_end(3);
+    linked_list.push_end(4);
+    linked_list.push_start(12);
     linked_list.print_list();
-    linked_list.remove_from_start();
+    linked_list.pop_end();
     linked_list.print_list();
-    linked_list.remove_from_end();
+    linked_list.pop_start();
     linked_list.print_list();
 }
